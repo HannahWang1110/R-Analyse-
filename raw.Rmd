@@ -1,0 +1,70 @@
+---
+title: "R Notebook"
+output: html_notebook
+fish_data=read.csv("/Users/mac/Desktop/Fou of DS/Fou of DS assignment1_R/fish1.csv")
+class(a)
+dim(a)
+colnames(fish_data)=c("time","weight","fishing rod")
+library("ggplot2", lib.loc="/Library/Frameworks/R.framework/Versions/3.4/Resources/library")
+gg=ggplot(a,aes(x=time,y=weight))+geom_point(aes(col=a$`fishing rod`))+geom_smooth(method ="loess",se=F)+xlim(c(0,24))+labs(subtitle="fished in a lake",y="weight(kg)",x="time(h)",title="scatterplot")
+plot(gg)
+library("ggExtra", lib.loc="/Library/Frameworks/R.framework/Versions/3.4/Resources/library")
+ggMarginal(gg,type="histogram",fill="transparent")
+ggMarginal(gg,type="density",fill="transparent")
+ggMarginal(gg,type="violin",fill="transparent")
+bar=ggplot(a,aes(weight))+scale_fill_brewer(palette = "Spectral")
+bar+geom_histogram(aes(fill=a$`fishing rod`),binwidth = 1)
+bar+geom_histogram(aes(fill=a$`fishing rod`),binwidth = 0.5)
+bar+geom_histogram(aes(fill=a$`fishing rod`),binwidth = 0.1)
+summary(fish_data)
+      time            weight      fishing rod
+ Min.   : 0.010   Min.   :0.010   A: 79      
+ 1st Qu.: 4.320   1st Qu.:0.705   B: 63      
+ Median : 8.960   Median :1.610   C:257      
+ Mean   : 9.356   Mean   :1.666              
+ 3rd Qu.:13.715   3rd Qu.:2.400              
+ Max.   :22.270   Max.   :4.880 
+denplot+geom_density(aes(fill=factor(`fishing rod`)))
+box_pl=ggplot(a,aes(`fishing rod`,weight))
+box_pl+geom_boxplot(varwidth = T,fill="plum")
+aggregate(fish_data[,2],list(fish_data$`fishing rod`),mean)
+  Group.1        x
+1       A 1.528987
+2       B 1.773968
+3       C 1.680973
+aggregate(fish_data[,2],list(fish_data$`fishing rod`),median)
+  Group.1    x
+1       A 1.34
+2       B 1.78
+3       C 1.66
+ aggregate(fish_data[,2],list(fish_data$`fishing rod`),var)
+  Group.1        x
+1       A 1.025037
+2       B 1.175518
+3       C 1.305981
+vio_timeplot=ggplot(fish_data, aes(`fishing rod`, time))
+vio_timeplot+geom_violin()
+vio_weightplot=ggplot(fish_data, aes(`fishing rod`, weight))
+vio_weightplot+geom_violin()
+t_plot=ggplot(fish_data,aes(x=time))+geom_line(aes(y=weight))
+t_plot
+t_plot=ggplot(fish_data,aes(x=time))+geom_line(aes(y=fish_data$`fishing rod`))
+t_plot
+vio_t_weiplot=ggplot(fish_data, aes(time, weight))
+vio_t_weiplot+geom_violin()
+ box_pl2=ggplot(fish_data,aes(`fishing rod`,time))
+box_pl2+geom_boxplot(varwidth = T,fill="plum")
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
